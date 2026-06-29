@@ -1,12 +1,18 @@
 import { IconContainer, InputContainer, InputText } from "./styles"
+import { Controller } from "react-hook-form";
 
-const Input = ({leftIcon, name, placeholder="", type=""}) => {
-    return(
+const Input = ({leftIcon, name, control, ...rest}) => {
+    return (
         <InputContainer>
             {leftIcon ? (<IconContainer>{leftIcon}</IconContainer>) : null}
-            <InputText name={name} placeholder={placeholder} type={type}></InputText>
+            <Controller
+                name={name}
+                control={control}
+                render={({ field }) => <InputText {...field} {...rest} />}
+            />
+
         </InputContainer>
     )
 }
 
-export {Input}
+export { Input }

@@ -4,14 +4,37 @@ import { Header } from '../../components/Header'
 import { Column, Container, CreateText, ForgetText, Row, SubtitleLogin, Title, TitleLogin, Wrapper } from './styles'
 import bannerImage from '../../assets/banner.png'
 import { Input } from '../../components/Input'
-import {MdEmail, MdLock} from 'react-icons/md'
+import { MdEmail, MdLock } from 'react-icons/md'
+import { useForm } from 'react-hook-form'
+import { api } from '../../services/api';
 
 const Login = () => {
 
     const navigate = useNavigate()
-    const handleClickSignIn = () => {
-        navigate('/feed')
-    }
+
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        reValidateMode: 'onChange',
+        mode: 'onChange',
+    });
+
+    const onSubmit = async (formData) => {
+        try {
+            const { data } = await api.get(`/users?email=${formData.email}&password=${formData.senha}`);
+
+            if (data.length && data[0].id) {
+                navigate('/feed')
+                return
+            }
+
+            debugger
+
+            alert('Usuário ou senha inválido')
+        } catch (e) {
+            //TODO: HOUVE UM ERRO
+        }
+    };
+
+    console.log('errors', errors);
 
     return (
         <>
@@ -28,14 +51,12 @@ const Login = () => {
                         <TitleLogin>Faça seu cadastro</TitleLogin>
                         <SubtitleLogin>Faça seu login e make the change._</SubtitleLogin>
                     </Wrapper>
-                    <form action="">
-                        <Input name={"email"} leftIcon={<MdEmail/>} placeholder="E-mail"></Input>
-                        <Input name={"password"} leftIcon={<MdLock/>} placeholder="Senha" type="password"></Input>
-                        <Button title={"Entrar"} variant='secondary' onClick={handleClickSignIn} type="button"></Button>
-                        <Row>
-                            <ForgetText>Esqueci minha senha</ForgetText>
-                            <CreateText>Criar conta</CreateText>
-                        </Row>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Input placeholder="E-mail" leftIcon={<MdEmail />} name="email" control={control} />
+                        {errors.email && <span>E-mail é obrigatório</span>}
+                        <Input type="password" placeholder="Senha" leftIcon={<MdLock />} name="senha" control={control} />
+                        {errors.senha && <span>Senha é obrigatório</span>}
+                        <Button title="Entrar" variant="secondary" type="submit" />
                     </form>
                 </Column>
             </Container>
