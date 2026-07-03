@@ -1,4 +1,5 @@
 {
+    "type":"module",
     "name": "react_cra",
     "version": "0.1.0",
     "private": true,
@@ -43,6 +44,7 @@
         ]
     },
     "devDependencies": {
+        "@types/styled-components": "^5.1.36",
         "json-server": "^1.0.0-beta.15"
     }
 }
