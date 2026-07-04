@@ -1,5 +1,11 @@
-interface IButton {
-    title : string, variant : string, onClick : void
+export interface IButton {
+    title: string,
+    variant?: string, 
+    onClick?: () => void,
+    type?: string
 }
 
-export type {IButton}
+
+export interface IButtonStyled {
+    variant: string
+}

@@ -11,8 +11,9 @@ import {
     Wrapper
 } from './styles'
 import logo from '../../assets/logo-dio.png'
+import { IHeader } from './types'
 
-const Header = ({ autenticado }) => {
+const Header = ({ autenticado } : IHeader) => {
     return (
         <Wrapper>
             <Container>

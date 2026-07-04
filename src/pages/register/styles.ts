@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IDefaultMargin } from "../../components/Input/types";
 
 export const Container = styled.div`
     display:flex;
@@ -20,7 +21,7 @@ export const Column = styled.div`
     max-width:380px;
 `
 
-export const DefaultMargin = styled.div`
+export const DefaultMargin = styled.div<IDefaultMargin>`
     margin-top: ${({ margin }) => `${margin || 20}px`};
 `;
 
